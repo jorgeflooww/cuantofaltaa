@@ -6,20 +6,20 @@
   <title>Cuenta regresiva</title>
   <link href="https://fonts.cdnfonts.com/css/din-alternate" rel="stylesheet">
   <style>
-    body {
+    /* Reset básico */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       height: 100vh;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background-color: #ffffff;
-      color: #000000;
       font-family: 'DIN Alternate', sans-serif;
       position: relative;
+      background: #ffffff;
+      color: #000000;
     }
 
     /* Fondo de imagen con opacidad */
@@ -30,33 +30,35 @@
       width: 100%;
       height: 100%;
       background-image: url('IMG_1755.jpeg');
-      background-size: cover;
-      background-position: center;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain; /* que no pierda partes */
       opacity: 0.4;
       z-index: 0;
     }
 
-    /* Contenido principal */
-    .wrapper, .bottom-counter {
-      position: relative;
-      z-index: 1; /* Por encima del fondo */
-    }
-
+    /* Contenido principal encima */
     .wrapper {
+      position: relative;
+      z-index: 1;
       max-width: 400px;
       width: 90%;
       margin: auto;
       padding: 20px;
+      text-align: center;
+      top: 30px;
     }
-    .title, .subtitle {
-      margin: 10px 0;
-    }
+
     .title {
       font-size: 2.5rem;
+      margin-bottom: 10px;
     }
+
     .subtitle {
       font-size: 1.5rem;
+      margin-top: 10px;
     }
+
     .container {
       display: flex;
       gap: 20px;
@@ -64,16 +66,19 @@
       flex-wrap: wrap;
       margin: 20px 0;
     }
+
     .time-box {
       display: flex;
       flex-direction: column;
       align-items: center;
       font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
     }
+
     .number {
       font-size: 2.5rem;
       font-weight: bold;
     }
+
     .label {
       font-size: 1rem;
       margin-top: 5px;
@@ -81,28 +86,31 @@
       letter-spacing: 1px;
     }
 
-    /* Modificamos el bloque de días sin clase */
+    /* Bloque de días libres más arriba */
     .bottom-counter {
       position: absolute;
-      bottom: 80px; /* ¡Subimos más el bloque! */
-      left: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.6); /* Fondo más blanco y visible */
-      padding: 10px;
+      bottom: 80px; /* subido para que no se corte */
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.05);
+      padding: 15px;
       border-radius: 10px;
       text-align: center;
       font-family: 'DIN Alternate', sans-serif;
       color: #000;
+      z-index: 1;
     }
 
     .bottom-title {
       font-size: 1.8rem;
       margin-bottom: 10px;
     }
+
     .bottom-number {
       font-size: 2rem;
       font-weight: bold;
     }
+
     .bottom-label {
       font-size: 1rem;
       margin-top: 5px;
@@ -111,88 +119,87 @@
     }
   </style>
 </head>
+
 <body>
 
-<!-- Fondo de imagen -->
-<div class="background-image"></div>
+  <!-- Fondo -->
+  <div class="background-image"></div>
 
-<!-- Audio que se reproduce en bucle -->
-<audio autoplay loop>
-  <source src="Pineapple on pizza OST - The floor is lava (mp3cut.net).mp3" type="audio/mpeg">
-  Tu navegador no soporta el elemento de audio.
-</audio>
+  <!-- Audio en bucle y autoplay -->
+  <audio id="background-music" src="Pineapple-on-pizza.mp3" autoplay loop></audio>
 
-<div class="wrapper">
-  <h1 class="title">FALTAN:</h1>
-  <div class="container" id="countdown">
-    <div class="time-box">
-      <div class="number" id="days">00</div>
-      <div class="label">días</div>
+  <!-- Contenido -->
+  <div class="wrapper">
+    <h1 class="title">FALTAN:</h1>
+    <div class="container" id="countdown">
+      <div class="time-box">
+        <div class="number" id="days">00</div>
+        <div class="label">días</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="hours">00</div>
+        <div class="label">horas</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="minutes">00</div>
+        <div class="label">minutos</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="seconds">00</div>
+        <div class="label">segundos</div>
+      </div>
     </div>
-    <div class="time-box">
-      <div class="number" id="hours">00</div>
-      <div class="label">horas</div>
-    </div>
-    <div class="time-box">
-      <div class="number" id="minutes">00</div>
-      <div class="label">minutos</div>
-    </div>
-    <div class="time-box">
-      <div class="number" id="seconds">00</div>
-      <div class="label">segundos</div>
-    </div>
+    <h2 class="subtitle">PARA VACACIONES ☀️</h2>
   </div>
-  <h2 class="subtitle">PARA VACACIONES ☀️</h2>
-</div>
 
-<div class="bottom-counter">
-  <div class="bottom-title">HAY:</div>
-  <div class="bottom-number" id="weekend-days">00</div>
-  <div class="bottom-label">DÍAS SIN CLASE</div>
-</div>
+  <div class="bottom-counter">
+    <div class="bottom-title">HAY:</div>
+    <div class="bottom-number" id="weekend-days">00</div>
+    <div class="bottom-label">DÍAS SIN CLASE</div>
+  </div>
 
-<script>
-  const countdown = () => {
-    const endDate = new Date('2025-06-20T14:15:00').getTime();
-    const now = new Date().getTime();
-    const distance = endDate - now;
+  <script>
+    const countdown = () => {
+      const endDate = new Date('2025-06-20T14:15:00').getTime();
+      const now = new Date().getTime();
+      const distance = endDate - now;
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    document.getElementById('days').innerText = days.toString().padStart(2, '0');
-    document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-    document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+      document.getElementById('days').innerText = days.toString().padStart(2, '0');
+      document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
 
-    if (distance < 0) {
-      document.getElementById('countdown').innerHTML = "¡Ya llegaron las vacaciones!";
-    }
-  };
-
-  const countWeekends = () => {
-    const now = new Date();
-    const end = new Date('2025-06-20T00:00:00');
-    let count = 0;
-    let current = new Date(now);
-
-    while (current <= end) {
-      const day = current.getDay();
-      if (day === 0 || day === 6) {
-        count++;
+      if (distance < 0) {
+        document.getElementById('countdown').innerHTML = "¡Ya llegaron las vacaciones!";
       }
-      current.setDate(current.getDate() + 1);
-    }
+    };
 
-    document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
-  };
+    const countWeekends = () => {
+      const now = new Date();
+      const end = new Date('2025-06-20T00:00:00');
+      let count = 0;
+      let current = new Date(now);
 
-  setInterval(countdown, 1000);
-  countdown();
-  countWeekends();
-</script>
+      while (current <= end) {
+        const day = current.getDay();
+        if (day === 0 || day === 6) {
+          count++;
+        }
+        current.setDate(current.getDate() + 1);
+      }
+
+      document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
+    };
+
+    setInterval(countdown, 1000);
+    countdown();
+    countWeekends();
+  </script>
 
 </body>
 </html>
