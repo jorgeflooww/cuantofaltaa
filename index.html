@@ -6,7 +6,6 @@
   <title>Cuenta regresiva</title>
   <link href="https://fonts.cdnfonts.com/css/din-alternate" rel="stylesheet">
   <style>
-    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
@@ -17,12 +16,15 @@
       height: 100vh;
       overflow: hidden;
       font-family: 'DIN Alternate', sans-serif;
-      position: relative;
       background: #ffffff;
       color: #000000;
+      display: flex;
+      align-items: center; /* centra verticalmente */
+      justify-content: center; /* centra horizontalmente */
+      position: relative;
     }
 
-    /* Fondo de imagen con opacidad */
+    /* Fondo con imagen */
     .background-image {
       position: absolute;
       top: 0;
@@ -32,21 +34,33 @@
       background-image: url('IMG_1755.jpeg');
       background-repeat: no-repeat;
       background-position: center center;
-      background-size: contain; /* que no pierda partes */
+      background-size: contain;
       opacity: 0.4;
       z-index: 0;
     }
 
-    /* Contenido principal encima */
+    /* Botón para la música */
+    #music-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 2;
+      font-size: 1rem;
+    }
+
+    /* Contenido principal */
     .wrapper {
       position: relative;
       z-index: 1;
       max-width: 400px;
       width: 90%;
-      margin: auto;
-      padding: 20px;
       text-align: center;
-      top: 30px;
     }
 
     .title {
@@ -86,10 +100,10 @@
       letter-spacing: 1px;
     }
 
-    /* Bloque de días libres más arriba */
+    /* Días libres */
     .bottom-counter {
       position: absolute;
-      bottom: 80px; /* subido para que no se corte */
+      bottom: 20px; /* bien colocado arriba del borde */
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0, 0, 0, 0.05);
@@ -125,8 +139,11 @@
   <!-- Fondo -->
   <div class="background-image"></div>
 
-  <!-- Audio en bucle y autoplay -->
-  <audio id="background-music" src="Pineapple-on-pizza.mp3" autoplay loop></audio>
+  <!-- Botón para controlar la música -->
+  <button id="music-button">🎵 Activar Música</button>
+
+  <!-- Audio en bucle pero pausado hasta que hagan clic -->
+  <audio id="background-music" src="Pineapple-on-pizza.mp3" loop></audio>
 
   <!-- Contenido -->
   <div class="wrapper">
@@ -195,6 +212,20 @@
 
       document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
     };
+
+    // Control del botón de música
+    const music = document.getElementById('background-music');
+    const musicButton = document.getElementById('music-button');
+
+    musicButton.addEventListener('click', () => {
+      if (music.paused) {
+        music.play();
+        musicButton.textContent = '🔇 Pausar Música';
+      } else {
+        music.pause();
+        musicButton.textContent = '🎵 Activar Música';
+      }
+    });
 
     setInterval(countdown, 1000);
     countdown();
