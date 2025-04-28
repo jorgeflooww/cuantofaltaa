@@ -3,87 +3,167 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contador para Vacaciones</title>
+  <title>Cuenta regresiva</title>
+  <link href="https://fonts.cdnfonts.com/css/din-alternate" rel="stylesheet">
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: white;
-      color: black;
-      text-align: center;
       margin: 0;
       padding: 0;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      text-align: center;
+      background-color: #ffffff;
+      color: #000000;
+      font-family: 'DIN Alternate', sans-serif;
+      position: relative;
+    }
+    .wrapper {
+      max-width: 400px;
+      width: 90%;
+      margin: auto;
+      padding: 20px;
+    }
+    .title, .subtitle {
+      margin: 10px 0;
+    }
+    .title {
+      font-size: 2.5rem;
+    }
+    .subtitle {
+      font-size: 1.5rem;
+    }
+    .container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .time-box {
+      display: flex;
       flex-direction: column;
+      align-items: center;
+      font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
     }
-
-    #contador {
-      font-family: 'Arial Rounded MT Bold', sans-serif;
-      font-size: 80px;
+    .number {
+      font-size: 2.5rem;
       font-weight: bold;
-      color: black;
     }
-
-    .dias, .horas, .minutos, .segundos {
-      font-size: 48px;
-      margin: 10px;
+    .label {
+      font-size: 1rem;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-
-    h1 {
-      font-family: 'DIN Alternate', sans-serif;
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      font-family: 'DIN Alternate', sans-serif;
-      font-size: 24px;
-      margin-top: 20px;
-    }
-
-    video {
-      max-width: 100%;
-      height: auto;
-      margin-top: 20px;
+    .bottom-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 10px;
       border-radius: 10px;
+      text-align: center;
+      font-family: 'DIN Alternate', sans-serif;
+      color: #000;
+    }
+    .bottom-title {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    .bottom-number {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .bottom-label {
+      font-size: 1rem;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
   </style>
 </head>
 <body>
-  <h1>FALTAN:</h1>
-  <div id="contador">
-    <div class="dias">Días: 14</div>
-    <div class="horas">Horas: 00</div>
-    <div class="minutos">Minutos: 00</div>
-    <div class="segundos">Segundos: 00</div>
+
+<!-- Audio que se reproduce en bucle -->
+<audio autoplay loop>
+  <source src="Pineapple on pizza OST - The floor is lava (mp3cut.net).mp3" type="audio/mpeg">
+  Tu navegador no soporta el elemento de audio.
+</audio>
+
+<div class="wrapper">
+  <h1 class="title">FALTAN:</h1>
+  <div class="container" id="countdown">
+    <div class="time-box">
+      <div class="number" id="days">00</div>
+      <div class="label">días</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="hours">00</div>
+      <div class="label">horas</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="minutes">00</div>
+      <div class="label">minutos</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="seconds">00</div>
+      <div class="label">segundos</div>
+    </div>
   </div>
-  <h2>PARA VACACIONES ☀️</h2>
-  <video controls>
-    <source src="video.mp4" type="video/mp4">
-    Tu navegador no soporta el elemento de video.
-  </video>
+  <h2 class="subtitle">PARA VACACIONES ☀️</h2>
+</div>
 
-  <script>
-    // Función para actualizar el contador
-    function updateCounter() {
-      const futureDate = new Date("2025-06-20T00:00:00"); // Fecha de fin
-      const now = new Date();
-      const difference = futureDate - now;
+<div class="bottom-counter">
+  <div class="bottom-title">HAY:</div>
+  <div class="bottom-number" id="weekend-days">00</div>
+  <div class="bottom-label">DÍAS SIN CLASE</div>
+</div>
 
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+<script>
+  const countdown = () => {
+    const endDate = new Date('2025-06-20T14:15:00').getTime();
+    const now = new Date().getTime();
+    const distance = endDate - now;
 
-      document.querySelector(".dias").textContent = `Días: ${days}`;
-      document.querySelector(".horas").textContent = `Horas: ${hours}`;
-      document.querySelector(".minutos").textContent = `Minutos: ${minutes}`;
-      document.querySelector(".segundos").textContent = `Segundos: ${seconds}`;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').innerText = days.toString().padStart(2, '0');
+    document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+    document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+    document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+
+    if (distance < 0) {
+      document.getElementById('countdown').innerHTML = "¡Ya llegaron las vacaciones!";
+    }
+  };
+
+  const countWeekends = () => {
+    const now = new Date();
+    const end = new Date('2025-06-20T00:00:00');
+    let count = 0;
+    let current = new Date(now);
+
+    while (current <= end) {
+      const day = current.getDay();
+      if (day === 0 || day === 6) {
+        count++;
+      }
+      current.setDate(current.getDate() + 1);
     }
 
-    setInterval(updateCounter, 1000); // Actualiza cada segundo
-  </script>
+    document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
+  };
+
+  setInterval(countdown, 1000);
+  countdown();
+  countWeekends();
+</script>
+
 </body>
 </html>
