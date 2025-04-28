@@ -3,189 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cuenta regresiva</title>
-  <link href="https://fonts.cdnfonts.com/css/din-alternate" rel="stylesheet">
+  <title>Contador para Vacaciones</title>
   <style>
     body {
+      font-family: 'Arial', sans-serif;
+      background-color: white;
+      color: black;
+      text-align: center;
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      background-color: #000;
-    }
-    video#background-video {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      z-index: -1;
-      transform: translate(-50%, -50%);
-      background-size: cover;
-      opacity: 0.3;
-      object-fit: cover;
-    }
-    audio {
-      display: none;
-    }
-    .wrapper {
-      max-width: 400px;
-      width: 90%;
-      margin: auto;
-      padding: 20px;
-      color: white;
-      z-index: 1;
-    }
-    .title, .subtitle {
-      font-family: 'DIN Alternate', sans-serif;
-      margin: 10px 0;
-    }
-    .title {
-      font-size: 2.5rem;
-    }
-    .subtitle {
-      font-size: 1.5rem;
-    }
-    .container {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 20px 0;
-    }
-    .time-box {
-      display: flex;
       flex-direction: column;
-      align-items: center;
-      font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
     }
-    .number {
-      font-size: 2.5rem;
+
+    #contador {
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      font-size: 80px;
       font-weight: bold;
+      color: black;
     }
-    .label {
-      font-size: 1rem;
-      margin-top: 5px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+
+    .dias, .horas, .minutos, .segundos {
+      font-size: 48px;
+      margin: 10px;
     }
-    .bottom-counter {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 10px;
-      border-radius: 10px;
-      text-align: center;
+
+    h1 {
       font-family: 'DIN Alternate', sans-serif;
-      color: #000;
+      font-size: 36px;
+      margin-bottom: 20px;
     }
-    .bottom-title {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
+
+    h2 {
+      font-family: 'DIN Alternate', sans-serif;
+      font-size: 24px;
+      margin-top: 20px;
     }
-    .bottom-number {
-      font-size: 2rem;
-      font-weight: bold;
-    }
-    .bottom-label {
-      font-size: 1rem;
-      margin-top: 5px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+
+    video {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-
-<video id="background-video" autoplay loop muted playsinline>
-  <source src="204565-924698132_small.mp4" type="video/mp4">
-  Tu navegador no soporta el video de fondo.
-</video>
-
-<audio id="background-audio" autoplay loop>
-  <source src="Pineapple on pizza OST - The floor is lava (mp3cut.net).mp3" type="audio/mpeg">
-  Tu navegador no soporta audio HTML5.
-</audio>
-
-<div class="wrapper">
-  <h1 class="title">FALTAN:</h1>
-  <div class="container" id="countdown">
-    <div class="time-box">
-      <div class="number" id="days">00</div>
-      <div class="label">días</div>
-    </div>
-    <div class="time-box">
-      <div class="number" id="hours">00</div>
-      <div class="label">horas</div>
-    </div>
-    <div class="time-box">
-      <div class="number" id="minutes">00</div>
-      <div class="label">minutos</div>
-    </div>
-    <div class="time-box">
-      <div class="number" id="seconds">00</div>
-      <div class="label">segundos</div>
-    </div>
+  <h1>FALTAN:</h1>
+  <div id="contador">
+    <div class="dias">Días: 14</div>
+    <div class="horas">Horas: 00</div>
+    <div class="minutos">Minutos: 00</div>
+    <div class="segundos">Segundos: 00</div>
   </div>
-  <h2 class="subtitle">PARA VACACIONES ☀️</h2>
-</div>
+  <h2>PARA VACACIONES ☀️</h2>
+  <video controls>
+    <source src="video.mp4" type="video/mp4">
+    Tu navegador no soporta el elemento de video.
+  </video>
 
-<div class="bottom-counter">
-  <div class="bottom-title">HAY:</div>
-  <div class="bottom-number" id="weekend-days">00</div>
-  <div class="bottom-label">DÍAS SIN CLASE</div>
-</div>
+  <script>
+    // Función para actualizar el contador
+    function updateCounter() {
+      const futureDate = new Date("2025-06-20T00:00:00"); // Fecha de fin
+      const now = new Date();
+      const difference = futureDate - now;
 
-<script>
-  const countdown = () => {
-    const endDate = new Date('2025-06-20T14:15:00').getTime();
-    const now = new Date().getTime();
-    const distance = endDate - now;
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById('days').innerText = days.toString().padStart(2, '0');
-    document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-    document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
-
-    if (distance < 0) {
-      document.getElementById('countdown').innerHTML = "¡Ya llegaron las vacaciones!";
-    }
-  };
-
-  const countWeekends = () => {
-    const now = new Date();
-    const end = new Date('2025-06-20T00:00:00');
-    let count = 0;
-    let current = new Date(now);
-
-    while (current <= end) {
-      const day = current.getDay();
-      if (day === 0 || day === 6) {
-        count++;
-      }
-      current.setDate(current.getDate() + 1);
+      document.querySelector(".dias").textContent = `Días: ${days}`;
+      document.querySelector(".horas").textContent = `Horas: ${hours}`;
+      document.querySelector(".minutos").textContent = `Minutos: ${minutes}`;
+      document.querySelector(".segundos").textContent = `Segundos: ${seconds}`;
     }
 
-    document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
-  };
-
-  setInterval(countdown, 1000);
-  countdown();
-  countWeekends();
-</script>
-
+    setInterval(updateCounter, 1000); // Actualiza cada segundo
+  </script>
 </body>
 </html>
