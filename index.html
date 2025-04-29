@@ -14,6 +14,7 @@
 
     body {
       height: 100vh;
+      padding: 30px;
       overflow: hidden;
       font-family: 'DIN Alternate', sans-serif;
       background: #ffffff;
@@ -41,8 +42,8 @@
     /* Botón de música grande */
     #music-button {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 30px;
+      right: 30px;
       padding: 20px 40px;
       background-color: rgba(0,0,0,0.7);
       color: orange;
@@ -57,6 +58,10 @@
 
     #music-button:hover {
       transform: scale(1.1);
+    }
+
+    .active {
+      color: red !important;
     }
 
     .wrapper {
@@ -211,7 +216,6 @@
       document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
     };
 
-    // Colores animados
     const colores = ['#ff4d4d', '#4d94ff', '#4dff88', '#ffdb4d', '#ff4df2', '#4dffe8'];
     let indiceColor = 0;
 
@@ -223,17 +227,18 @@
 
     setInterval(cambiarColor, 700);
 
-    // Control de música
     const music = document.getElementById('background-music');
     const musicButton = document.getElementById('music-button');
 
     musicButton.addEventListener('click', () => {
       if (music.paused) {
         music.play();
-        musicButton.textContent = '💤 no lo pares  😒😔';
+        musicButton.textContent = '💤 no lo pares 😒😔';
+        musicButton.classList.add('active');
       } else {
         music.pause();
         musicButton.textContent = '🎵 Pulsa para tener el flow 😎';
+        musicButton.classList.remove('active');
       }
     });
 
