@@ -140,16 +140,21 @@
       letter-spacing: 1px;
     }
 
-    .top-left-counter {
+    .top-counters {
       position: absolute;
       top: 30px;
       left: 30px;
+      display: flex;
+      gap: 20px;
+      z-index: 2;
+    }
+
+    .top-left-counter {
       background: rgba(255, 255, 255, 0.5);
       padding: 15px 20px;
       border-radius: 10px;
       text-align: center;
       font-family: 'DIN Alternate', sans-serif;
-      z-index: 2;
     }
 
     .top-title {
@@ -160,7 +165,6 @@
     .top-number {
       font-size: 2rem;
       font-weight: bold;
-      color: #9C0000;
       font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
     }
 
@@ -198,18 +202,21 @@
   <button id="music-button">🎵 Pulsa para tener el flow</button>
   <audio id="background-music" src="Pineapple-on-pizza.mp3" loop></audio>
 
-  <!-- Contador de días de clase -->
-  <div class="top-left-counter">
-    <div class="top-title">HAY:</div>
-    <div class="top-number" id="class-days">00</div>
-    <div class="top-label">días de clase ☠️</div>
-  </div>
+  <!-- Contadores arriba a la izquierda -->
+  <div class="top-counters">
+    <!-- Contador de días de clase -->
+    <div class="top-left-counter">
+      <div class="top-title">HAY:</div>
+      <div class="top-number" id="class-days" style="color: #9C0000;">00</div>
+      <div class="top-label">días de clase ☠️</div>
+    </div>
 
-  <!-- Contador de exámenes -->
-  <div class="top-left-counter" style="top: 120px;">
-    <div class="top-title">HAY:</div>
-    <div class="top-number" id="exam-days" style="color: #009FCE;">00</div>
-    <div class="top-label">EXÁMENES</div>
+    <!-- Contador de exámenes -->
+    <div class="top-left-counter">
+      <div class="top-title">HAY:</div>
+      <div class="top-number" id="exam-days" style="color: #009FCE;">00</div>
+      <div class="top-label">EXÁMENES</div>
+    </div>
   </div>
 
   <!-- Contador principal -->
@@ -305,6 +312,7 @@
 
     const countExams = () => {
       const examDates = [
+        '2025-05-05',
         '2025-05-07',
         '2025-05-08',
         '2025-05-12',
