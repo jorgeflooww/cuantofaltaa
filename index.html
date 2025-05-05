@@ -109,11 +109,42 @@
       letter-spacing: 1px;
     }
 
-    .useful-counter {
+    .bottom-counter {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.05);
+      padding: 15px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-family: 'DIN Alternate', sans-serif;
+      z-index: 1;
+    }
+
+    .bottom-title {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .bottom-number {
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
+    }
+
+    .bottom-label {
+      font-size: 1rem;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .top-left-counter {
       position: absolute;
       top: 30px;
       left: 30px;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.5);
       padding: 15px 20px;
       border-radius: 10px;
       text-align: center;
@@ -121,18 +152,19 @@
       z-index: 2;
     }
 
-    .useful-title {
-      font-size: 1.4rem;
+    .top-title {
+      font-size: 1.5rem;
       margin-bottom: 5px;
     }
 
-    .useful-number {
+    .top-number {
       font-size: 2rem;
       font-weight: bold;
+      color: #9C0000;
       font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
     }
 
-    .useful-label {
+    .top-label {
       font-size: 1rem;
       margin-top: 5px;
       text-transform: uppercase;
@@ -147,13 +179,14 @@
   <button id="music-button">🎵 Pulsa para tener el flow</button>
   <audio id="background-music" src="Pineapple-on-pizza.mp3" loop></audio>
 
-  <!-- CONTADOR DÍAS DE CLASE -->
-  <div class="useful-counter">
-    <div class="useful-title">HAY:</div>
-    <div class="useful-number" id="useful-days">00</div>
-    <div class="useful-label">días de clase ☠️</div>
+  <!-- Contador de días de clase -->
+  <div class="top-left-counter">
+    <div class="top-title">HAY:</div>
+    <div class="top-number" id="class-days">00</div>
+    <div class="top-label">días de clase ☠️</div>
   </div>
 
+  <!-- Contador principal -->
   <div class="wrapper">
     <h1 class="title">FALTAN:</h1>
     <div class="container" id="countdown">
@@ -177,6 +210,13 @@
     <h2 class="subtitle">PARA VACACIONES ☀️</h2>
   </div>
 
+  <!-- Contador de fines de semana -->
+  <div class="bottom-counter">
+    <div class="bottom-title">HAY:</div>
+    <div class="bottom-number" id="weekend-days">00</div>
+    <div class="bottom-label">días sin clase</div>
+  </div>
+
   <script>
     const countdown = () => {
       const endDate = new Date('2025-06-20T14:15:00').getTime();
@@ -194,11 +234,28 @@
       document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
 
       if (distance < 0) {
-        document.getElementById('countdown').innerHTML = "¡al fin putas vacaciones!";
+        document.getElementById('countdown').innerHTML = "¡Ya llegaron las vacaciones!";
       }
     };
 
-    const countUsefulDays = () => {
+    const countWeekends = () => {
+      const now = new Date();
+      const end = new Date('2025-06-20T00:00:00');
+      let count = 0;
+      let current = new Date(now);
+
+      while (current <= end) {
+        const day = current.getDay();
+        if (day === 0 || day === 6) {
+          count++;
+        }
+        current.setDate(current.getDate() + 1);
+      }
+
+      document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
+    };
+
+    const countClassDays = () => {
       const now = new Date();
       const end = new Date('2025-06-20T00:00:00');
       let count = 0;
@@ -212,8 +269,19 @@
         current.setDate(current.getDate() + 1);
       }
 
-      document.getElementById('useful-days').innerText = count.toString().padStart(2, '0');
+      document.getElementById('class-days').innerText = count.toString().padStart(2, '0');
     };
+
+    const colores = ['#ff4d4d', '#4d94ff', '#4dff88', '#ffdb4d', '#ff4df2', '#4dffe8'];
+    let indiceColor = 0;
+
+    function cambiarColor() {
+      const numero = document.getElementById('weekend-days');
+      numero.style.color = colores[indiceColor];
+      indiceColor = (indiceColor + 1) % colores.length;
+    }
+
+    setInterval(cambiarColor, 700);
 
     const music = document.getElementById('background-music');
     const musicButton = document.getElementById('music-button');
@@ -232,7 +300,8 @@
 
     setInterval(countdown, 1000);
     countdown();
-    countUsefulDays();
+    countWeekends();
+    countClassDays();
   </script>
 </body>
 </html>
