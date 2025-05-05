@@ -205,6 +205,13 @@
     <div class="top-label">días de clase ☠️</div>
   </div>
 
+  <!-- Contador de exámenes -->
+  <div class="top-left-counter" style="top: 120px;">
+    <div class="top-title">HAY:</div>
+    <div class="top-number" id="exam-days" style="color: #009FCE;">00</div>
+    <div class="top-label">EXÁMENES</div>
+  </div>
+
   <!-- Contador principal -->
   <div class="wrapper">
     <h1 class="title">FALTAN:</h1>
@@ -296,6 +303,30 @@
       document.getElementById('class-days').innerText = count.toString().padStart(2, '0');
     };
 
+    const countExams = () => {
+      const examDates = [
+        '2025-05-07',
+        '2025-05-08',
+        '2025-05-12',
+        '2025-05-14',
+        '2025-05-15',
+        '2025-05-19',
+        '2025-05-22',
+        '2025-05-28',
+        '2025-06-02'
+      ];
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const remainingExams = examDates.filter(dateStr => {
+        const examDate = new Date(dateStr);
+        return examDate >= today;
+      }).length;
+
+      document.getElementById('exam-days').innerText = remainingExams.toString().padStart(2, '0');
+    };
+
     const colores = ['#ff4d4d', '#4d94ff', '#4dff88', '#ffdb4d', '#ff4df2', '#4dffe8'];
     let indiceColor = 0;
 
@@ -326,6 +357,7 @@
     countdown();
     countWeekends();
     countClassDays();
+    countExams();
   </script>
 </body>
 </html>
