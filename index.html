@@ -39,7 +39,6 @@
       z-index: 0;
     }
 
-    /* Botón de música grande */
     #music-button {
       position: absolute;
       top: 30px;
@@ -110,31 +109,30 @@
       letter-spacing: 1px;
     }
 
-    .bottom-counter {
+    .useful-counter {
       position: absolute;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.05);
+      top: 30px;
+      left: 30px;
+      background: rgba(255, 255, 255, 0.3);
       padding: 15px 20px;
       border-radius: 10px;
       text-align: center;
       font-family: 'DIN Alternate', sans-serif;
-      z-index: 1;
+      z-index: 2;
     }
 
-    .bottom-title {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
+    .useful-title {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
     }
 
-    .bottom-number {
+    .useful-number {
       font-size: 2rem;
       font-weight: bold;
       font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
     }
 
-    .bottom-label {
+    .useful-label {
       font-size: 1rem;
       margin-top: 5px;
       text-transform: uppercase;
@@ -148,6 +146,13 @@
 
   <button id="music-button">🎵 Pulsa para tener el flow</button>
   <audio id="background-music" src="Pineapple-on-pizza.mp3" loop></audio>
+
+  <!-- CONTADOR DÍAS DE CLASE -->
+  <div class="useful-counter">
+    <div class="useful-title">HAY:</div>
+    <div class="useful-number" id="useful-days">00</div>
+    <div class="useful-label">días de clase ☠️</div>
+  </div>
 
   <div class="wrapper">
     <h1 class="title">FALTAN:</h1>
@@ -172,12 +177,6 @@
     <h2 class="subtitle">PARA VACACIONES ☀️</h2>
   </div>
 
-  <div class="bottom-counter">
-    <div class="bottom-title">HAY:</div>
-    <div class="bottom-number" id="weekend-days">00</div>
-    <div class="bottom-label">DÍAS SIN CLASE</div>
-  </div>
-
   <script>
     const countdown = () => {
       const endDate = new Date('2025-06-20T14:15:00').getTime();
@@ -195,11 +194,11 @@
       document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
 
       if (distance < 0) {
-        document.getElementById('countdown').innerHTML = "¡Ya llegaron las vacaciones!";
+        document.getElementById('countdown').innerHTML = "¡al fin putas vacaciones!";
       }
     };
 
-    const countWeekends = () => {
+    const countUsefulDays = () => {
       const now = new Date();
       const end = new Date('2025-06-20T00:00:00');
       let count = 0;
@@ -207,25 +206,14 @@
 
       while (current <= end) {
         const day = current.getDay();
-        if (day === 0 || day === 6) {
+        if (day !== 0 && day !== 6) {
           count++;
         }
         current.setDate(current.getDate() + 1);
       }
 
-      document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
+      document.getElementById('useful-days').innerText = count.toString().padStart(2, '0');
     };
-
-    const colores = ['#ff4d4d', '#4d94ff', '#4dff88', '#ffdb4d', '#ff4df2', '#4dffe8'];
-    let indiceColor = 0;
-
-    function cambiarColor() {
-      const numero = document.getElementById('weekend-days');
-      numero.style.color = colores[indiceColor];
-      indiceColor = (indiceColor + 1) % colores.length;
-    }
-
-    setInterval(cambiarColor, 700);
 
     const music = document.getElementById('background-music');
     const musicButton = document.getElementById('music-button');
@@ -244,7 +232,7 @@
 
     setInterval(countdown, 1000);
     countdown();
-    countWeekends();
+    countUsefulDays();
   </script>
 </body>
 </html>
