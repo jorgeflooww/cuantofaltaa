@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vacaciooneeess</title>
+  <title>Meri Crismas</title>
   <link href="https://fonts.cdnfonts.com/css/din-alternate" rel="stylesheet">
   <style>
     * {
@@ -240,7 +240,7 @@
         <div class="label">segundos</div>
       </div>
     </div>
-    <h2 class="subtitle">PARA VACACIONES ☀️</h2>
+    <h2 class="subtitle">PARA NAVIDAD 🎄🪅❤️</h2>
   </div>
 
   <!-- Contador de fines de semana -->
@@ -257,7 +257,7 @@
 
   <script>
     const countdown = () => {
-      const endDate = new Date('2025-06-20T14:15:00').getTime();
+      const endDate = new Date('2025-12-22T14:15:00').getTime();
       const now = new Date().getTime();
       const distance = endDate - now;
 
@@ -272,13 +272,13 @@
       document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
 
       if (distance < 0) {
-        document.getElementById('countdown').innerHTML = "¡Ya llegaron las vacaciones!";
+        document.getElementById('countdown').innerHTML = "¡Feliz Navidad mis amores 😘!";
       }
     };
 
     const countWeekends = () => {
       const now = new Date();
-      const end = new Date('2025-06-20T00:00:00');
+      const end = new Date('2025-12-22T00:00:00');
       let count = 0;
       let current = new Date(now);
 
@@ -295,7 +295,7 @@
 
     const countClassDays = () => {
       const now = new Date();
-      const end = new Date('2025-06-20T00:00:00');
+      const end = new Date('2025-12-22T00:00:00');
       let count = 0;
       let current = new Date(now);
 
@@ -351,7 +351,7 @@
         musicButton.classList.add('active');
       } else {
         music.pause();
-        musicButton.textContent = '🎵 Pulsa para tener el flow 😎';
+        musicButton.textContent = '🎵 Pulsa para tener el flow navideño 🎄😎';
         musicButton.classList.remove('active');
       }
     });
