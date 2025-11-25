@@ -5,18 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meri Crismas</title>
 
-  <!-- Fuentes originales -->
+  <!-- Fuentes -->
   <link href="https://fonts.cdnfonts.com/css/din-alternate" rel="stylesheet">
-
-  <!-- NUEVA FUENTE Black Sans Bold -->
   <link href="https://fonts.cdnfonts.com/css/black-sans" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       height: 100vh;
@@ -33,13 +27,11 @@
 
     .background-image {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background-image: url('IMG_1755.jpeg');
       background-repeat: no-repeat;
-      background-position: center center;
+      background-position: center;
       background-size: cover;
       opacity: 0.8;
       z-index: 0;
@@ -47,8 +39,7 @@
 
     #music-button {
       position: absolute;
-      top: 30px;
-      right: 30px;
+      top: 30px; right: 30px;
       padding: 20px 40px;
       background-color: rgba(0,0,0,0.7);
       color: orange;
@@ -60,15 +51,10 @@
       font-family: 'DIN Alternate', sans-serif;
       transition: transform 0.3s ease;
     }
+    #music-button:hover { transform: scale(1.1); }
+    .active { color: red !important; }
 
-    #music-button:hover {
-      transform: scale(1.1);
-    }
-
-    .active {
-      color: red !important;
-    }
-
+    /* CONTADOR PRINCIPAL */
     .wrapper {
       position: relative;
       z-index: 1;
@@ -76,27 +62,17 @@
       width: 90%;
       text-align: center;
 
-      /* FONDO TRANSLÚCIDO MÁS SUAVE */
       background: rgba(255, 255, 255, 0.35);
       padding: 20px;
       border-radius: 15px;
     }
 
-    /* CAMBIO DE FUENTE A BLACK SANS */
-    .title,
-    .subtitle {
+    .title, .subtitle {
       font-family: 'Black Sans', sans-serif !important;
     }
 
-    .title {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 1.5rem;
-      margin-top: 10px;
-    }
+    .title { font-size: 2.5rem; margin-bottom: 10px; }
+    .subtitle { font-size: 1.5rem; margin-top: 10px; }
 
     .container {
       display: flex;
@@ -110,8 +86,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      /* TIPOGRAFÍA BLACK SANS */
       font-family: 'Black Sans', sans-serif !important;
     }
 
@@ -130,12 +104,43 @@
       font-family: 'Black Sans', sans-serif !important;
     }
 
+    /* RECUDROS ARRIBA IZQ OPACIDAD 1 */
+    .top-counters {
+      position: absolute;
+      top: 30px; left: 30px;
+      display: flex;
+      gap: 20px;
+      z-index: 2;
+    }
+
+    .top-left-counter {
+      background: rgba(255, 255, 255, 1);
+      padding: 15px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-family: 'DIN Alternate', sans-serif;
+    }
+
+    .top-title { font-size: 1.5rem; margin-bottom: 5px; }
+    .top-number {
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
+    }
+    .top-label {
+      font-size: 1rem;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* CONTADOR DE FINES DE SEMANA (MISMO RECUADRO) */
     .bottom-counter {
       position: absolute;
       bottom: 100px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 1);
       padding: 15px 20px;
       border-radius: 10px;
       text-align: center;
@@ -143,17 +148,12 @@
       z-index: 1;
     }
 
-    .bottom-title {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-    }
-
+    .bottom-title { font-size: 1.8rem; margin-bottom: 10px; }
     .bottom-number {
       font-size: 2rem;
       font-weight: bold;
       font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
     }
-
     .bottom-label {
       font-size: 1rem;
       margin-top: 5px;
@@ -161,67 +161,54 @@
       letter-spacing: 1px;
     }
 
-    .top-counters {
+    /* ❄️ COPITOS DE NIEVE ❄️ */
+    .snowflake {
       position: absolute;
-      top: 30px;
-      left: 30px;
-      display: flex;
-      gap: 20px;
-      z-index: 2;
+      top: -20px;
+      color: white;
+      font-size: 1.2rem;
+      pointer-events: none;
+      animation: fall linear forwards;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 2px white);
+      z-index: 0.5;
     }
 
-    .top-left-counter {
-      background: rgba(255, 255, 255, 0.75); /* OPACIDAD AUMENTADA */
-      padding: 15px 20px;
-      border-radius: 10px;
-      text-align: center;
-      font-family: 'DIN Alternate', sans-serif;
-    }
-
-    .top-title {
-      font-size: 1.5rem;
-      margin-bottom: 5px;
-    }
-
-    .top-number {
-      font-size: 2rem;
-      font-weight: bold;
-      font-family: 'Arial Rounded MT Bold', 'Arial Rounded', Arial, sans-serif;
-    }
-
-    .top-label {
-      font-size: 1rem;
-      margin-top: 5px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 
 <body>
+
   <div class="background-image"></div>
 
   <button id="music-button">🎵 Pulsa para tener el flow</button>
   <audio id="background-music" src="Pineapple-on-pizza.mp3" loop></audio>
 
-  <!-- Contadores arriba a la izquierda -->
+  <!-- CONTADORES ARRIBA -->
   <div class="top-counters">
+
     <div class="top-left-counter">
       <div class="top-title">HAY:</div>
-      <div class="top-number" id="class-days" style="color: #9C0000;">00</div>
+      <div class="top-number" id="class-days" style="color:#9C0000;">00</div>
       <div class="top-label">días de clase ☠️(sin contar findes)</div>
     </div>
-    
+
     <div class="top-left-counter">
       <div class="top-title">HAY:</div>
-      <div class="top-number" id="exam-days" style="color: #009FCE;">00</div>
+      <div class="top-number" id="exam-days" style="color:#009FCE;">00</div>
       <div class="top-label">EXÁMENES</div>
     </div>
+
   </div>
 
-  <!-- Contador principal -->
+  <!-- CONTADOR PRINCIPAL -->
   <div class="wrapper">
     <h1 class="title">FALTAN:</h1>
+
     <div class="container" id="countdown">
       <div class="time-box">
         <div class="number" id="days">00</div>
@@ -240,17 +227,21 @@
         <div class="label">segundos</div>
       </div>
     </div>
+
     <h2 class="subtitle">PARA NAVIDAD 🎄🪅❤️</h2>
   </div>
 
-  <!-- Contador de fines de semana -->
+  <!-- CONTADOR FINES DE SEMANA -->
   <div class="bottom-counter">
     <div class="bottom-title">HAY:</div>
     <div class="bottom-number" id="weekend-days">00</div>
     <div class="bottom-label">días sin clase</div>
   </div>
 
+
   <script>
+    /* --- LÓGICA DE CONTADORES --- */
+
     const countdown = () => {
       const endDate = new Date('2025-12-22T14:15:00').getTime();
       const now = new Date().getTime();
@@ -265,9 +256,12 @@
       document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
       document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
       document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+
+      if (distance < 0) {
+        document.getElementById('countdown').innerHTML = "¡Feliz Navidad mis amores 😘!";
+      }
     };
 
-    /* FINES DE SEMANA */
     const countWeekends = () => {
       const now = new Date();
       const end = new Date('2025-12-22');
@@ -275,14 +269,14 @@
       let current = new Date(now);
 
       while (current <= end) {
-        if ([0, 6].includes(current.getDay())) count++;
+        const d = current.getDay();
+        if (d === 0 || d === 6) count++;
         current.setDate(current.getDate() + 1);
       }
-
-      document.getElementById('weekend-days').innerText = count.toString().padStart(2, '0');
+      document.getElementById('weekend-days').innerText =
+        count.toString().padStart(2, '0');
     };
 
-    /* DÍAS DE CLASE */
     const countClassDays = () => {
       const now = new Date();
       const end = new Date('2025-12-22');
@@ -290,68 +284,79 @@
       let current = new Date(now);
 
       while (current <= end) {
-        if (![0, 6].includes(current.getDay())) count++;
+        const d = current.getDay();
+        if (d !== 0 && d !== 6) count++;
         current.setDate(current.getDate() + 1);
       }
-
-      document.getElementById('class-days').innerText = count.toString().padStart(2, '0');
+      document.getElementById('class-days').innerText =
+        count.toString().padStart(2, '0');
     };
 
-    /* EXÁMENES — FECHAS 2025 */
     const countExams = () => {
       const examDates = [
-        '2025-11-27',
-        '2025-11-28',
-        '2025-12-01',
-        '2025-12-03',
-        '2025-12-05',
-        '2025-12-10',
-        '2025-12-11'
+        "2025-11-27",
+        "2025-11-28",
+        "2025-12-01",
+        "2025-12-03",
+        "2025-12-05",
+        "2025-12-10",
+        "2025-12-11"
       ];
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      today.setHours(0,0,0,0);
 
       const remaining = examDates.filter(dateStr => {
         return new Date(dateStr) >= today;
       }).length;
 
-      document.getElementById('exam-days').innerText = remaining.toString().padStart(2, '0');
+      document.getElementById('exam-days').innerText =
+        remaining.toString().padStart(2,'0');
     };
 
-    /* CAMBIO DE COLOR */
-    const colores = ['#ff4d4d', '#4d94ff', '#4dff88', '#ffdb4d', '#ff4df2', '#4dffe8'];
-    let indiceColor = 0;
+    /* Cambiar color dinámico */
+    const colores = ['#ff4d4d','#4d94ff','#4dff88','#ffdb4d','#ff4df2','#4dffe8'];
+    let i = 0;
+    setInterval(() => {
+      document.getElementById('weekend-days').style.color = colores[i];
+      i = (i + 1) % colores.length;
+    }, 700);
 
-    function cambiarColor() {
-      const numero = document.getElementById('weekend-days');
-      numero.style.color = colores[indiceColor];
-      indiceColor = (indiceColor + 1) % colores.length;
-    }
-    setInterval(cambiarColor, 700);
 
-    /* MÚSICA */
-    const music = document.getElementById('background-music');
-    const musicButton = document.getElementById('music-button');
+    /* --- EFECTO NIEVE + VIBRACIÓN --- */
+    document.addEventListener("click", (e) => {
 
-    musicButton.addEventListener('click', () => {
-      if (music.paused) {
-        music.play();
-        musicButton.textContent = '💤 no lo pares 😒😔';
-        musicButton.classList.add('active');
-      } else {
-        music.pause();
-        musicButton.textContent = '🎵 Pulsa para tener el flow navideño 🎄😎';
-        musicButton.classList.remove('active');
+      if (navigator.vibrate) navigator.vibrate(100);
+
+      const cantidad = Math.floor(Math.random() * 7) + 5;
+
+      for (let n = 0; n < cantidad; n++) {
+        const snow = document.createElement("div");
+        snow.classList.add("snowflake");
+        snow.innerHTML = "❄️";
+
+        snow.style.left = (e.clientX + (Math.random()*100 - 50)) + "px";
+
+        const size = Math.random()*1.4 + 0.8;
+        snow.style.fontSize = size + "rem";
+
+        const dur = Math.random()*2 + 3;
+        snow.style.animationDuration = dur + "s";
+
+        document.body.appendChild(snow);
+
+        setTimeout(() => snow.remove(), dur * 1000);
       }
     });
 
-    /* INICIALIZAR */
+
+    /* Iniciar contadores */
     setInterval(countdown, 1000);
     countdown();
     countWeekends();
     countClassDays();
     countExams();
   </script>
+
 </body>
 </html>
